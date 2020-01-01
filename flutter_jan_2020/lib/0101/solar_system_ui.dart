@@ -1,5 +1,6 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_jan_2020/0101/card_widget.dart';
 import 'package:flutter_jan_2020/0101/item_list.dart';
 
 // https://dribbble.com/shots/9177633-Solar-system-UI
@@ -102,7 +103,7 @@ class _SolarSystemUIState extends State<SolarSystemUI> {
             child: Stack(
               children: <Widget>[
                 // main
-                Placeholder(),
+                CardWidget(currentIndex),
 
                 // pageView
                 Positioned.fill(
@@ -110,8 +111,19 @@ class _SolarSystemUIState extends State<SolarSystemUI> {
                         itemCount: items.length,
                         scrollDirection: Axis.horizontal,
                         controller: _pageController,
+                        reverse: true,
                         itemBuilder: (context, index){
-                          return Placeholder();
+                          return Container(
+                            margin: EdgeInsets.only(
+                              left: 180.0,
+                              right: 40.0,
+                              bottom: 250.0,
+                            ),
+                            child: Image.asset(
+                              items[currentIndex.round()].image,
+                              fit: BoxFit.fill,
+                            ),
+                          );
                         }),
                 ),
               ],
