@@ -17,6 +17,9 @@ class _SolarSystemUIState extends State<SolarSystemUI> {
   // double
   double padding = 16.0;
   double radius = 24.0;
+  
+  // color
+  Color _color = Color.fromRGBO(247, 210, 129, 1);
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +74,88 @@ class _SolarSystemUIState extends State<SolarSystemUI> {
             ),
           ),
 
+          // main pageView
           
 
+          // bottom bar
+          Positioned(
+            left: padding,
+            right: padding,
+            bottom: padding /2,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: padding),
+              height: 64.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(radius),
+                color: Colors.grey[900],
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  // selected container
+                  Container(
+                    width: 64.0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        // selected icon
+                        Icon(
+                          Icons.favorite_border,
+                          size: 28.0,
+                          color: _color,
+                        ),
+
+                        // selected text
+                        Text("Explore",
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: _color,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // unselected container
+                  Container(
+                    width: 64.0,
+                    child: Center(
+                      child: Icon(
+                        Icons.explore,
+                        size: 28.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+
+                  Container(
+                    width: 64.0,
+                    child: Center(
+                      child: Icon(
+                        Icons.search,
+                        size: 28.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+
+                  Container(
+                    width: 64.0,
+                    child: Center(
+                      child: Icon(
+                        Icons.favorite_border,
+                        size: 28.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
