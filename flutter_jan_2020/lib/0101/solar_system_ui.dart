@@ -1,4 +1,6 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_jan_2020/0101/item_list.dart';
 
 // https://dribbble.com/shots/9177633-Solar-system-UI
 
@@ -20,6 +22,23 @@ class _SolarSystemUIState extends State<SolarSystemUI> {
   
   // color
   Color _color = Color.fromRGBO(247, 210, 129, 1);
+
+  // pageView controller
+  PageController _pageController;
+
+  double currentIndex = items.length - 1.0;
+
+  @override
+  void initState() {
+    _pageController = PageController(initialPage: currentIndex.toInt())
+    ..addListener((){
+      setState(() {
+        currentIndex = _pageController.page;
+        print("currentIndex = $currentIndex");
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +94,57 @@ class _SolarSystemUIState extends State<SolarSystemUI> {
           ),
 
           // main pageView
-          
+          Positioned(
+            top: 120.0,
+            left: 0,
+            right: 0,
+            bottom: 130.0,
+            child: Stack(
+              children: <Widget>[
+                // main
+                Placeholder(),
+
+                // pageView
+                Positioned.fill(
+                    child: PageView.builder(
+                        itemCount: items.length,
+                        scrollDirection: Axis.horizontal,
+                        controller: _pageController,
+                        itemBuilder: (context, index){
+                          return Placeholder();
+                        }),
+                ),
+              ],
+            ),
+          ),
+
+          // dots indicator
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 90.0,
+            child: Center(
+              child: Container(
+                height: 32.0,
+                child: DotsIndicator(
+                  dotsCount: items.length,
+                  position: currentIndex,
+                  axis: Axis.horizontal,
+                  decorator: DotsDecorator(
+                    activeShape: StadiumBorder(),
+
+                    color: Colors.grey[600].withOpacity(0.50),
+                    activeColor: Colors.brown,
+
+                    size: Size(8.0, 8.0),
+                    activeSize: Size(16.0, 8.0),
+
+                    spacing: EdgeInsets.all(4.0),
+                  ),
+                ),
+              ),
+            ),
+          ),
 
           // bottom bar
           Positioned(
