@@ -222,7 +222,44 @@ class _GuitarAppState extends State<GuitarApp> with TickerProviderStateMixin {
           ),
 
           // bottom text
+          Positioned(
+            top: screenHeight - 170.0 - slideAnimation.value /1.30,
+            left: padding,
+            right: padding,
+            child: Container(
+              height: 100.0,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  // text: Fender American Elite Strat
+                  Text("Fender\nAmerican\nElite Strat",
+                    style: TextStyle(
+                      fontSize: 36.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      height: 1.0,
+                    ),
+                  ),
 
+                  Spacer(),
+
+                  // spec
+                  isClicked? Container() : Text("Spec".toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  isClicked? Container() : Icon(
+                    Icons.keyboard_arrow_down,
+                    size: 16.0,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
