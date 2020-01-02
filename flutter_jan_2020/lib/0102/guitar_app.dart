@@ -10,6 +10,9 @@ class GuitarApp extends StatefulWidget {
 }
 
 class _GuitarAppState extends State<GuitarApp> with TickerProviderStateMixin {
+  // color
+  Color _backgroundColor = Color.fromRGBO(236, 226, 209, 1);
+
   // transform animation
   AnimationController _transformAnimationController;
   Animation<double> transformAnimation;
@@ -42,12 +45,35 @@ class _GuitarAppState extends State<GuitarApp> with TickerProviderStateMixin {
       });
     });
 
+    // slide up animation
+    _slideAnimationController = AnimationController(duration: Duration(seconds: 2), vsync: this)
+      ..forward();
+
+    slideAnimation = Tween<double>(begin: 0.0, end: 500.0).animate(
+      CurvedAnimation(parent: _slideAnimationController,
+          curve: Curves.fastLinearToSlowEaseIn),
+    )
+      ..addListener((){
+        setState(() {
+        });
+      })
+      ..addStatusListener((status){
+        setState(() {
+          if(status == AnimationStatus.completed){
+            _slideAnimationController.reverse();
+          } else if(status == AnimationStatus.dismissed){
+            _slideAnimationController.forward();
+          }
+        });
+      });
+
     super.initState();
   }
 
   @override
   void dispose() {
     _transformAnimationController?.dispose();
+    _slideAnimationController?.dispose();
     super.dispose();
   }
 
@@ -57,11 +83,12 @@ class _GuitarAppState extends State<GuitarApp> with TickerProviderStateMixin {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: _backgroundColor,
       body: Stack(
         children: <Widget>[
           // top transform page
           Positioned(
-            top: 0,
+            top: -slideAnimation.value/2,
             left: 0,
             right: 0,
             height: screenHeight,
@@ -79,7 +106,7 @@ class _GuitarAppState extends State<GuitarApp> with TickerProviderStateMixin {
 
           // bottom slide page
           Positioned(
-            top: screenHeight,
+            top: screenHeight - slideAnimation.value * 1.17,
             left: 0,
             right: 0,
             height: screenHeight,
