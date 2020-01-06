@@ -10,8 +10,8 @@ class ChooseCharacterApp extends StatefulWidget {
 }
 
 class _ChooseCharacterAppState extends State<ChooseCharacterApp> {
-  // list view index
-  int _currentIndex = 3;
+  double itemsWidth = 140.0;
+  double marginLeft = 2 * 140.0;
 
   List<Color> _colors = [Colors.red, Colors.amber, Colors.teal, Colors.pink, Colors.indigo, Colors.black];
 
@@ -21,27 +21,27 @@ class _ChooseCharacterAppState extends State<ChooseCharacterApp> {
 
     switch (index) {
       case 0:
-        return Offset(0.0, 0.0);
+        return Offset(0.0  - 10.0 * index, 0.0);
         break;
 
       case 1:
-        return Offset(60.0 - boxWidth, 30.0);
+        return Offset(60.0 - 10.0 * index, 30.0);
         break;
 
       case 2:
-        return Offset(60.0 - boxWidth, 80.0);
+        return Offset(60.0 - 10.0 * index, 80.0);
         break;
 
       case 3:
-        return Offset(0.0 - boxWidth, 120.0);
+        return Offset(0.0 - 10.0 * index, 120.0);
         break;
 
       case 4:
-        return Offset(-60.0 - boxWidth, 80.0);
+        return Offset(-60.0 - 10.0 * index, 80.0);
         break;
 
       case 5:
-        return Offset(-60.0 - boxWidth, 30.0);
+        return Offset(-60.0 - 10.0 * index, 30.0);
         break;
     }
   }
@@ -52,18 +52,21 @@ class _ChooseCharacterAppState extends State<ChooseCharacterApp> {
   // animate list view
   _scrollPage(bool direction){
     setState(() {
-      direction? _currentIndex++ : _currentIndex--;
       _scrollController.animateTo(
-        direction? 100.0 : -100.0,
-        duration: Duration(seconds: 2),
+//        marginLeft += direction? itemsWidth/2 : -itemsWidth/2,
+        marginLeft += direction? -50.0 : 50.0,
+        duration: Duration(milliseconds: 100),
         curve: Curves.fastLinearToSlowEaseIn,
       );
+      print("marginLeft = $marginLeft");
     });
   }
 
   @override
   void initState() {
-    _scrollController = ScrollController()
+    _scrollController = ScrollController(
+      initialScrollOffset: marginLeft
+    )
     ..addListener((){
       setState(() {
       });
@@ -93,26 +96,20 @@ class _ChooseCharacterAppState extends State<ChooseCharacterApp> {
               scrollDirection: Axis.horizontal,
               itemCount: _colors.length,
               shrinkWrap: true,
-              padding: EdgeInsets.only(left: 280.0),
-              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.only(left: marginLeft),
+//              physics: NeverScrollableScrollPhysics(),
               controller: _scrollController,
               itemBuilder: (context, index){
-                return Transform.translate(
-                  offset: _positionXY(index),
-                  child: Transform.rotate(
-                    angle: pi * index / 3,
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: 400.0),
-                      width: 140.0,
-                      color: _colors[index],
-                      child: Center(
-                        child: Text(index.toString(),
-                          style: TextStyle(
-                            fontSize: 40.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                return Container(
+                  margin: EdgeInsets.only(bottom: 400.0),
+                  width: itemsWidth,
+                  color: _colors[index],
+                  child: Center(
+                    child: Text(index.toString(),
+                      style: TextStyle(
+                        fontSize: 40.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -137,7 +134,6 @@ class _ChooseCharacterAppState extends State<ChooseCharacterApp> {
                     onTap: (){
                       print("prev btn");
                       _scrollPage(false);
-                      print("index = $_currentIndex");
                     },
                     child: Container(
                       height: 40.0,
@@ -151,7 +147,6 @@ class _ChooseCharacterAppState extends State<ChooseCharacterApp> {
                     onTap: (){
                       print("next btn");
                       _scrollPage(true);
-                      print("index = $_currentIndex");
                     },
                     child: Container(
                       height: 40.0,
