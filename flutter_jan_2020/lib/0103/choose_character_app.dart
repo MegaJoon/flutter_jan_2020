@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_jan_2020/0103/card_list.dart';
 
 // https://www.instagram.com/p/B1yZ_jEgc_I/?igshid=1ko34i9ovlbbr
 
@@ -10,152 +11,138 @@ class ChooseCharacterApp extends StatefulWidget {
 }
 
 class _ChooseCharacterAppState extends State<ChooseCharacterApp> {
-  double itemsWidth = 140.0;
-  double marginLeft = 2 * 140.0;
+  // double
+  double radius = 12.0;
+  double padding = 16.0;
 
-  List<Color> _colors = [Colors.red, Colors.amber, Colors.teal, Colors.pink, Colors.indigo, Colors.black];
+  // page index
+  int index = 0;
 
-  // return offset Function
-  _positionXY(int index){
-    double boxWidth = 140.0 * index;
+  // string
+  String title = "Choose a Character";
 
-    switch (index) {
-      case 0:
-        return Offset(0.0  - 10.0 * index, 0.0);
-        break;
-
-      case 1:
-        return Offset(60.0 - 10.0 * index, 30.0);
-        break;
-
-      case 2:
-        return Offset(60.0 - 10.0 * index, 80.0);
-        break;
-
-      case 3:
-        return Offset(0.0 - 10.0 * index, 120.0);
-        break;
-
-      case 4:
-        return Offset(-60.0 - 10.0 * index, 80.0);
-        break;
-
-      case 5:
-        return Offset(-60.0 - 10.0 * index, 30.0);
-        break;
-    }
-  }
-
-  // list view controller
-  ScrollController _scrollController;
-
-  // animate list view
-  _scrollPage(bool direction){
-    setState(() {
-      _scrollController.animateTo(
-//        marginLeft += direction? itemsWidth/2 : -itemsWidth/2,
-        marginLeft += direction? -50.0 : 50.0,
-        duration: Duration(milliseconds: 100),
-        curve: Curves.fastLinearToSlowEaseIn,
-      );
-      print("marginLeft = $marginLeft");
-    });
-  }
-
-  @override
-  void initState() {
-    _scrollController = ScrollController(
-      initialScrollOffset: marginLeft
-    )
-    ..addListener((){
-      setState(() {
-      });
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _scrollController?.dispose();
-    super.dispose();
-  }
+  Color _backgroundColor = Colors.deepPurple.withOpacity(0.30);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: Column(
         children: <Widget>[
-          // container
-          Positioned(
-            top: 150.0,
-            left: -150.0,
-            right: -500.0,
-            bottom: -100.0,
-            // list view
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: _colors.length,
-              shrinkWrap: true,
-              padding: EdgeInsets.only(left: marginLeft),
-//              physics: NeverScrollableScrollPhysics(),
-              controller: _scrollController,
-              itemBuilder: (context, index){
-                return Container(
-                  margin: EdgeInsets.only(bottom: 400.0),
-                  width: itemsWidth,
-                  color: _colors[index],
-                  child: Center(
-                    child: Text(index.toString(),
-                      style: TextStyle(
-                        fontSize: 40.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+          // appbar
+          Container(
+            height: 180.0,
+            child: Stack(
+              children: <Widget>[
+                // left background
+                Positioned(
+                  top: 0,
+                  left: -50.0,
+                  child: Transform.rotate(
+                    angle: 0.78,
+                    child: Container(
+                      height: 150.0,
+                      width: 150.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(radius),
+                        color: _backgroundColor,
                       ),
                     ),
                   ),
-                );
-              },
+                ),
+
+                // right background
+                Positioned(
+                  top: 20.0,
+                  left: 80.0,
+                  child: Transform.rotate(
+                    angle: 0.78,
+                    child: Container(
+                      height: 100.0,
+                      width: 100.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(radius),
+                        color: _backgroundColor,
+                      ),
+                    ),
+                  ),
+                ),
+
+                // text: title
+                Positioned(
+                  top: padding,
+                  left: padding,
+                  child: SafeArea(
+                    top: true,
+                    left: true,
+                    right: true,
+                    child: Text(title,
+                      style: TextStyle(
+                        fontSize: 28.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
 
-          // center btn
-          Positioned(
-            bottom: 120.0,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 40.0,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  // prev btn
-                  InkWell(
-                    onTap: (){
-                      print("prev btn");
-                      _scrollPage(false);
-                    },
-                    child: Container(
-                      height: 40.0,
-                      width: 100.0,
-                      child: Placeholder(),
-                    ),
-                  ),
+          // main
+          Flexible(
+            fit: FlexFit.tight,
+            child: Stack(
+              children: <Widget>[
+                // card
+                Positioned.fill(
+                    child: CardList(index),
+                ),
 
-                  // next btn
-                  InkWell(
-                    onTap: (){
-                      print("next btn");
-                      _scrollPage(true);
-                    },
+                // center container
+                Positioned(
+                  top: 300.0,
+                  left: 0,
+                  right: 0,
+                  child: Center(
                     child: Container(
                       height: 40.0,
-                      width: 100.0,
-                      child: Placeholder(),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          // prev btn
+                          InkWell(
+                            onTap: (){
+                              setState(() {
+                                index++;
+                              });
+                            },
+                            child: Container(
+                              width: 100.0,
+                              child: Placeholder(),
+                            ),
+                          ),
+
+                          SizedBox(width: padding),
+
+                          // next btn
+                          InkWell(
+                            onTap: (){
+                              setState(() {
+                                index--;
+                              });
+                            },
+                            child: Container(
+                              width: 100.0,
+                              child: Placeholder(),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
