@@ -45,6 +45,7 @@ class _BankCardsAppState extends State<BankCardsApp> {
 
           // title
           Container(
+            margin: EdgeInsets.only(bottom: padding),
             padding: EdgeInsets.symmetric(horizontal: padding),
             height: 64.0,
             child: Row(
@@ -93,7 +94,33 @@ class _BankCardsAppState extends State<BankCardsApp> {
             ),
           ),
 
-          
+          // text: balance
+          Padding(
+            padding: EdgeInsets.only(left: padding),
+            child: RichText(text: TextSpan(children: [
+                // text: balance
+                TextSpan(text: "Balance\n",
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+
+                // text: $2349
+                TextSpan(text: "\$2349.15",
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    height: 1.5,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ]),
+            ),
+          ),
+
+
         ],
       ),
     );
