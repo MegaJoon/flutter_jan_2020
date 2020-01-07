@@ -12,8 +12,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
 //      home: SolarSystemUI(),  // 01-01
 //      home: GuitarApp(),  // 01-02
-      home: ChooseCharacterApp(),  // 01-03
+//      home: ChooseCharacterApp(),  // 01-03
 //      home: LightingApp(),  // 01-06
+      home: LightingApp(),  // 01-06
     );
   }
 }
