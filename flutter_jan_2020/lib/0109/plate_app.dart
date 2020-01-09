@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_jan_2020/0109/plate_list.dart';
 
 // https://www.instagram.com/p/B4KVPEBgSlM/?igshid=mf7es8ogwyaw
 
@@ -18,12 +21,93 @@ class _PlateAppState extends State<PlateApp> {
   double swipeDirection = 0.0;
   double positionY = -500.0;
 
+  // page view
+  PageController _pageController;
+  int _currentIndex = 0;
+
+  // scroll controller
+  ScrollController _scrollController;
+
+  ValueNotifier<double> notifier;
+
+  _onScroll(){
+    notifier.value = _pageController.page;
+
+    onChanged(notifier.value * MediaQuery.of(context).size.width);
+  }
+
+  onChanged(double position){
+    setState(() {
+      _scrollController.animateTo(
+          position,
+          duration: Duration(microseconds: 10),
+          curve: Curves.fastLinearToSlowEaseIn,
+      );
+    });
+  }
+
+  @override
+  void initState() {
+    notifier = ValueNotifier<double>(0);
+
+    _pageController = PageController(initialPage: _currentIndex)
+    ..addListener(_onScroll);
+
+    _scrollController = ScrollController(initialScrollOffset: 0);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    notifier?.dispose();
+    _pageController?.dispose();
+    _scrollController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
           // background top list view
+          Positioned(
+            top: -150.0,
+            left: 0,
+            right: 0,
+            height: 500.0,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                controller: _scrollController,
+                itemCount: plates.length,
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                itemBuilder: (context, index){
+                  return ClipRRect(
+                    child: Container(
+                      width: screenWidth,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            plates[index].image),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(
+                          sigmaX: 2.0,
+                          sigmaY: 2.0,
+                        ),
+                        child: Container(
+                          color: Colors.white.withOpacity(0.01),
+                        ),
+                      ),
+                    ),
+                  );
+                },),
+          ),
 
           // appbar
           Positioned(
@@ -114,6 +198,69 @@ class _PlateAppState extends State<PlateApp> {
           ),
 
           // main page view
+          Positioned(
+            top: 150.0,
+            left: 0,
+            right: 0,
+            bottom: 210.0,
+            child: PageView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: plates.length,
+              controller: _pageController,
+              onPageChanged: (int currentIndex){
+                setState(() {
+                  _currentIndex = currentIndex;
+                });
+                },
+              itemBuilder: (context, index){
+                double angle = (notifier.value - index) * 8.0;
+
+                return Container(
+                  child: Column(
+                    children: <Widget>[
+                      // image
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Transform.translate(
+                          offset: Offset(0.0, _currentIndex == index? 0.0 : 80.0),
+                          child: Transform(
+                            transform: Matrix4.identity()
+                            ..setEntry(3, 2, 0.001)
+                            ..rotateZ(angle),
+                            alignment: FractionalOffset.center,
+                            child: Image.asset(
+                              plates[index].image,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      // text: title
+                      Text(plates[index].title,
+                        style: TextStyle(
+                          fontSize: 24.0,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          height: 1.5,
+                        ),
+                      ),
+
+                      // text: price
+                      Text(plates[index].price,
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.pink,
+                          fontWeight: FontWeight.bold,
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+                },
+            ),
+          ),
 
           // bottom image
           Positioned(
