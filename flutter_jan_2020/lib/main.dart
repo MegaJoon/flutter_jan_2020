@@ -5,6 +5,7 @@ import 'package:flutter_jan_2020/0103/choose_character_app.dart';
 import 'package:flutter_jan_2020/0106/lighting_app.dart';
 import 'package:flutter_jan_2020/0107/bank_cards_app.dart';
 import 'package:flutter_jan_2020/0108/customized_option.dart';
+import 'package:flutter_jan_2020/0109/plate_app.dart';
 
 void main() => runApp(MyApp());
 
