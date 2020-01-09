@@ -124,7 +124,12 @@ class _PlateAppState extends State<PlateApp> {
                   children: <Widget>[
                     // left icon
                     IconButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        setState(() {
+                          print("positionY");
+                          positionY = -500.0;
+                        });
+                      },
                       icon: Icon(
                         Icons.arrow_back,
                         size: 28.0,
@@ -346,8 +351,210 @@ class _PlateAppState extends State<PlateApp> {
             right: 0,
             bottom: positionY,
             child: Container(
+              padding: EdgeInsets.all(padding),
               height: 500.0,
-              child: Placeholder(),
+              decoration: BoxDecoration(
+                boxShadow: [BoxShadow(
+                  color: Colors.black12,
+                  spreadRadius: 2.0,
+                  blurRadius: 2.0,
+                )],
+
+                color: Colors.white,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    height: 80.0,
+                    child: Row(
+                      children: <Widget>[
+                        // fruit image
+                        Container(
+                          margin: EdgeInsets.only(right: padding),
+                          width: 150.0,
+                          child: Image.asset(
+                            "assets/0109/image10.png",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+
+                        // fruit text
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            // text: fruit name
+                            Text("Orange",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+
+                            // text: weight
+                            Text("50g",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 80.0,
+                    child: Row(
+                      children: <Widget>[
+                        // fruit image
+                        Container(
+                          margin: EdgeInsets.only(right: padding),
+                          width: 150.0,
+                          child: Image.asset(
+                            "assets/0109/image11.png",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+
+                        // fruit text
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            // text: fruit name
+                            Text("Blueberries",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+
+                            // text: weight
+                            Text("50g",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 80.0,
+                    child: Row(
+                      children: <Widget>[
+                        // fruit image
+                        Container(
+                          margin: EdgeInsets.only(right: padding),
+                          width: 150.0,
+                          child: Image.asset(
+                            "assets/0109/image12.png",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+
+                        // fruit text
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            // text: fruit name
+                            Text("Pancakes",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+
+                            // text: weight
+                            Text("50g",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 80.0,
+                    child: Row(
+                      children: <Widget>[
+                        // fruit image
+                        Container(
+                          margin: EdgeInsets.only(right: padding),
+                          width: 150.0,
+                          child: Image.asset(
+                            "assets/0109/image13.png",
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+
+                        // fruit text
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            // text: fruit name
+                            Text("Honey",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+
+                            // text: weight
+                            Text("50g",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  // add ingridients
+                  InkWell(
+                    onTap: (){
+                      print("on clicked");
+                    },
+                    child: Container(
+                      height: 64.0,
+                      width: screenWidth,
+                      child: CustomPaint(
+                        painter: BorderContainer(),
+                        child: Center(
+                          child: Text("Add Ingridients",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.pink,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -355,3 +562,106 @@ class _PlateAppState extends State<PlateApp> {
     );
   }
 }
+
+class BorderContainer extends CustomPainter{
+  double width = 3.0;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    var colorPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..color = Colors.pink
+      ..strokeWidth = 2.0;
+
+    var spacePaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..color = Colors.white
+      ..strokeWidth = 2.0;
+
+    // left line
+    for(double i = 0.0; i < size.height - width; i = i + width *2){
+      // color line
+      canvas.drawLine(
+          Offset(0.0, i),
+          Offset(0.0, i + width),
+          colorPaint);
+
+      // white line
+      canvas.drawLine(
+          Offset(0.0, i + width),
+          Offset(0.0, i + width * 2),
+          spacePaint);
+    }
+
+    // bottom line
+    for(double i = 0.0; i < size.width - width; i = i + width *2){
+      // color line
+      canvas.drawLine(
+          Offset(i, size.height),
+          Offset(i + width, size.height),
+          colorPaint);
+
+      // white line
+      canvas.drawLine(
+          Offset(i + width, size.height),
+          Offset(i + width * 2, size.height),
+          spacePaint);
+    }
+
+    // right line
+    for(double i = 0.0; i < size.height - width; i = i + width *2){
+      // color line
+      canvas.drawLine(
+          Offset(size.width, i),
+          Offset(size.width, i + width),
+          colorPaint);
+
+      // white line
+      canvas.drawLine(
+          Offset(size.width, i + width),
+          Offset(size.width, i + width * 2),
+          spacePaint);
+    }
+
+    // top line
+    for(double i = 0.0; i < size.width - width; i = i + width *2){
+      // color line
+      canvas.drawLine(
+          Offset(i, 0.0),
+          Offset(i + width, 0.0),
+          colorPaint);
+
+      // white line
+      canvas.drawLine(
+          Offset(i + width, 0.0),
+          Offset(i + width * 2, 0.0),
+          spacePaint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
