@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
 //      home: ChooseCharacterApp(),  // 01-03
 //      home: LightingApp(),  // 01-06
 //      home: BankCardsApp(),  // 01-07
-      home: CustomizedOption(),  // 01-08
+//      home: CustomizedOption(),  // 01-08
+      home: PlateApp(),  // 01-09
     );
   }
 }
