@@ -25,6 +25,94 @@ class _PlateAppState extends State<PlateApp> {
         children: <Widget>[
           // background top list view
 
+          // appbar
+          Positioned(
+            top: 0,
+            left: 0,
+            right: padding,
+            child: SafeArea(
+              top: true,
+              left: true,
+              right: true,
+              child: Container(
+                height: 40.0,
+                child: Row(
+                  children: <Widget>[
+                    // left icon
+                    IconButton(
+                      onPressed: (){},
+                      icon: Icon(
+                        Icons.arrow_back,
+                        size: 28.0,
+                        color: Colors.pink,
+                      ),
+                    ),
+
+                    // spacer
+                    Spacer(),
+
+                    // right icon
+                    Container(
+                      height: 40.0,
+                      width: 40.0,
+                      child: Stack(
+                        children: <Widget>[
+                          // icon in container
+                          Positioned(
+                            top: 2.0,
+                            left: 2.0,
+                            right: 2.0,
+                            bottom: 2.0,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.pink,
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.shopping_basket,
+                                  size: 16.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          // badges
+                          Positioned(
+                            top: 2.0,
+                            right: 2.0,
+                            child: Container(
+                              height: 12.0,
+                              width: 12.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.pink,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 1.0,
+                                ),
+                              ),
+                              child: Center(
+                                child: Text("1",
+                                  style: TextStyle(
+                                    fontSize: 6.0,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
           // main page view
 
           // bottom image
