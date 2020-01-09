@@ -8,10 +8,33 @@ class PlateApp extends StatefulWidget {
 }
 
 class _PlateAppState extends State<PlateApp> {
+  // string
+  String _bottomImage = "assets/0109/image3.png";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Placeholder(),
+      body: Stack(
+        children: <Widget>[
+          // background top list view
+
+          // main page view
+
+          // add to cart container
+
+          // bottom image
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: -50.0,
+            height: 150.0,
+            child: Image.asset(
+              _bottomImage,
+              fit: BoxFit.fill,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
