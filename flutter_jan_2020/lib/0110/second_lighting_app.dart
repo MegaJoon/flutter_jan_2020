@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 // https://www.instagram.com/p/B6vBB7DHAkJ/
@@ -12,6 +14,7 @@ class _SecondLightingAppState extends State<SecondLightingApp> {
   Color _backgroundColor = Color.fromRGBO(69, 11, 254, 1);
   Color _startColor = Color.fromRGBO(247, 155, 145, 1);
   Color _endColor = Color.fromRGBO(252, 136, 197, 1);
+  Color _color = Color.fromRGBO(58, 13, 204, 1);
 
   // string
   String title = "Lighting";
@@ -20,11 +23,16 @@ class _SecondLightingAppState extends State<SecondLightingApp> {
   double padding = 16.0;
   double radius = 16.0;
 
+  double marginTop = 0.0;
+  double marginLeft = 0.0;
+
+  double ratio = 1.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       // set background color
-      backgroundColor: _backgroundColor,
+      backgroundColor: _backgroundColor.withOpacity(max(ratio, 0.10)),
 
       // body
       body: Column(
@@ -35,7 +43,7 @@ class _SecondLightingAppState extends State<SecondLightingApp> {
             left: true,
             right: true,
             child: Container(
-              margin: EdgeInsets.only(left: padding),
+              margin: EdgeInsets.only(top: padding /2, left: padding),
               height: 40.0,
               child: Row(
                 children: <Widget>[
@@ -69,7 +77,258 @@ class _SecondLightingAppState extends State<SecondLightingApp> {
           // main
           Flexible(
             fit: FlexFit.tight,
-            child: Placeholder(),
+            child: Stack(
+              children: <Widget>[
+                // bedroom
+                Positioned(
+                  top: 40.0,
+                  right: 50.0,
+                  height: 150.0,
+                  width: 150.0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: RadialGradient(
+                        colors: [_backgroundColor,
+                          Colors.blueAccent.withOpacity(0.50)
+                        ],
+
+                        stops: [0.80, 1.0],
+                      ),
+
+                      boxShadow: [BoxShadow(
+                        color: Colors.black12,
+                        spreadRadius: 1.0,
+                        blurRadius: 1.0,
+                      )],
+                    ),
+                    child: Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          // icon
+                          Icon(
+                            Icons.wb_sunny,
+                            size: 16.0,
+                            color: Colors.white,
+                          ),
+
+                          // spacer
+                          SizedBox(height: 6.0),
+
+                          // text
+                          Text("BedRoom",
+                            style: TextStyle(
+                              fontSize: 10.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                // living room
+                Positioned(
+                  right: -20.0,
+                  bottom: 140.0,
+                  height: 200.0,
+                  width: 200.0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: RadialGradient(
+                        colors: [_backgroundColor,
+                          Colors.blueAccent.withOpacity(0.50)
+                        ],
+
+                        stops: [0.80, 1.0],
+                      ),
+
+                      boxShadow: [BoxShadow(
+                        color: Colors.black12,
+                        spreadRadius: 1.0,
+                        blurRadius: 1.0,
+                      )],
+                    ),
+                    child: Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          // icon
+                          Icon(
+                            Icons.wb_sunny,
+                            size: 16.0,
+                            color: Colors.white,
+                          ),
+
+                          // spacer
+                          SizedBox(height: 6.0),
+
+                          // text
+                          Text("Living Room",
+                            style: TextStyle(
+                              fontSize: 10.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                // kitchen
+                Positioned(
+                  top: 100.0,
+                  left: 30.0,
+                  height: 200.0,
+                  width: 200.0,
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      top: padding,
+                      left: padding /2,
+                      right: padding /2,
+                      bottom: padding /4,
+                    ),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _color,
+                    ),
+                    child: Stack(
+                      children: <Widget>[
+                        // real bubble
+                        Positioned(
+                          top: marginTop,
+                          left: marginLeft,
+                          right: marginLeft,
+                          bottom: 0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                colors: [_startColor, _endColor],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        // bubble cover
+                        Positioned.fill(
+                          child: GestureDetector(
+                            // vertical
+                            onVerticalDragStart: (DragStartDetails dragDetails){},
+                            onVerticalDragUpdate: (DragUpdateDetails dragDetails){
+                              setState(() {
+                                // marginTop range: 6.80 - 177.40
+                                if(marginTop <= 6.80) marginTop = 6.80;
+                                if(marginTop >= 177.40) marginTop = 177.40;
+
+                                // marginLeft range: 3.40 - 88.70
+                                if(marginLeft <= 3.40) marginLeft = 3.40;
+                                if(marginLeft >= 88.70) marginLeft = 88.70;
+
+                                marginTop += dragDetails.delta.dy *2;
+                                marginLeft += dragDetails.delta.dy;
+
+                                ratio = (177.40 - marginTop) / 177.40;
+                              });
+                            },
+                            onVerticalDragEnd: (DragEndDetails dragDetails){},
+
+                            child: Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  // icon
+                                  Icon(
+                                    Icons.wb_sunny,
+                                    size: 32.0 * max(ratio, 0.30),
+                                    color: Colors.white,
+                                  ),
+
+                                  // spacer
+                                  SizedBox(height: 6.0),
+
+                                  // text
+                                  Text("Kitchen",
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                // bath
+                Positioned(
+                  left: 100.0,
+                  bottom: 80.0,
+                  height: 150.0,
+                  width: 150.0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: RadialGradient(
+                        colors: [_backgroundColor,
+                          Colors.blueAccent.withOpacity(0.50)
+                        ],
+
+                        stops: [0.80, 1.0],
+                      ),
+
+                      boxShadow: [BoxShadow(
+                        color: Colors.black12,
+                        spreadRadius: 1.0,
+                        blurRadius: 1.0,
+                      )],
+                    ),
+                    child: Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          // icon
+                          Icon(
+                            Icons.wb_sunny,
+                            size: 16.0,
+                            color: Colors.white,
+                          ),
+
+                          // spacer
+                          SizedBox(height: 6.0),
+
+                          // text
+                          Text("BathRoom",
+                            style: TextStyle(
+                              fontSize: 10.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
 
           // bottom bar
