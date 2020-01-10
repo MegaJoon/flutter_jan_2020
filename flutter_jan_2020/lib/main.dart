@@ -7,6 +7,7 @@ import 'package:flutter_jan_2020/0107/bank_cards_app.dart';
 import 'package:flutter_jan_2020/0108/customized_option.dart';
 import 'package:flutter_jan_2020/0109/plate_app.dart';
 import 'package:flutter_jan_2020/0110/second_lighting_app.dart';
+import 'package:flutter_jan_2020/0110/travel_app.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
 //      home: BankCardsApp(),  // 01-07
 //      home: CustomizedOption(),  // 01-08
 //      home: PlateApp(),  // 01-09
-      home: SecondLightingApp(),  // 01-10
+//      home: SecondLightingApp(),  // 01-10
+      home: TravelApp(),  // 01-10
     );
   }
 }
