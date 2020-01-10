@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_jan_2020/0110/second_travel_page.dart';
 import 'package:flutter_jan_2020/0110/travel_items_list.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -201,102 +202,116 @@ class _TravelAppState extends State<TravelApp> {
                 });
                 },
               itemBuilder: (context, index){
-                return Container(
-                  padding: EdgeInsets.only(
-                    top: padding,
-                    left: padding,
-                    right: padding,
-                    bottom: padding *2,
-                  ),
-                  margin: EdgeInsets.only(
-                      top: padding *2,
-                      right: padding *2,
-                      bottom: padding *2,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(radius),
+                return InkWell(
+                  onTap: (){
+                    print("on clicked page view image");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SecondTravelPage(index),
+                        ),
+                    );
+                  },
+                  child: Hero(
+                    tag: "travel $index",
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        top: padding,
+                        left: padding,
+                        right: padding,
+                        bottom: padding *2,
+                      ),
+                      margin: EdgeInsets.only(
+                          top: padding *2,
+                          right: padding *2,
+                          bottom: padding *2,
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(radius),
 //                    color: Colors.pink,
-                    image: DecorationImage(
-                      image: AssetImage(travels[index].image),
-                      fit: BoxFit.fill,
-                    ),
-                    boxShadow: [BoxShadow(
-                      color: Colors.black12,
-                      spreadRadius: 2.0,
-                      blurRadius: 2.0,
-                      offset: Offset(2.0, 2.0),
-                    )],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      // container: score
-                      Container(
-                        height: 20.0,
-                        width: 48.0,
-                        decoration: ShapeDecoration(
-                          shape: StadiumBorder(),
-                          color: Colors.white.withOpacity(0.20),
+                        image: DecorationImage(
+                          image: AssetImage(travels[index].image),
+                          fit: BoxFit.fill,
                         ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            // icon: star
-                            Icon(
-                              Icons.star,
-                              size: 12.0,
-                                color: Colors.white,
-                            ),
-
-                            // text: score
-                            Text(travels[index].score,
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
+                        boxShadow: [BoxShadow(
+                          color: Colors.black12,
+                          spreadRadius: 2.0,
+                          blurRadius: 2.0,
+                          offset: Offset(2.0, 2.0),
+                        )],
                       ),
-
-                      // spacer
-                      Spacer(),
-
-                      // text: title
-                      Text(travels[index].title,
-                        style: TextStyle(
-                          fontSize: 28.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-
-                      // text: subTitle
-                      Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          // icon: location
-                          Icon(
-                            Icons.location_on,
-                            size: 12.0,
-                            color: Colors.white,
+                          // container: score
+                          Container(
+                            height: 20.0,
+                            width: 48.0,
+                            decoration: ShapeDecoration(
+                              shape: StadiumBorder(),
+                              color: Colors.white.withOpacity(0.20),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                // icon: star
+                                Icon(
+                                  Icons.star,
+                                  size: 12.0,
+                                    color: Colors.white,
+                                ),
+
+                                // text: score
+                                Text(travels[index].score,
+                                  style: TextStyle(
+                                    fontSize: 12.0,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
 
                           // spacer
-                          SizedBox(width: 4.0),
+                          Spacer(),
 
-                          // text: subtitle
-                          Text(travels[index].subTitle,
+                          // text: title
+                          Text(travels[index].title,
                             style: TextStyle(
-                              fontSize: 12.0,
+                              fontSize: 28.0,
                               color: Colors.white,
-                              fontWeight: FontWeight.w300,
+                              fontWeight: FontWeight.bold,
                             ),
+                          ),
+
+                          // text: subTitle
+                          Row(
+                            children: <Widget>[
+                              // icon: location
+                              Icon(
+                                Icons.location_on,
+                                size: 12.0,
+                                color: Colors.white,
+                              ),
+
+                              // spacer
+                              SizedBox(width: 4.0),
+
+                              // text: subtitle
+                              Text(travels[index].subTitle,
+                                style: TextStyle(
+                                  fontSize: 12.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                 );
                 },
