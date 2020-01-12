@@ -42,7 +42,12 @@ class _LacBlancAppState extends State<LacBlancApp>
           ..forward();
 
     _animation =
-        Tween<double>(begin: 0.0, end: 2.0).animate(_animationController)
+        Tween<double>(begin: 0.0, end: 2.0).animate(
+          CurvedAnimation(
+            curve: Curves.fastOutSlowIn,
+            parent: _animationController,
+          ),
+        )
           ..addListener(() {
             setState(() {
               _fraction = _animation.value;
@@ -50,9 +55,7 @@ class _LacBlancAppState extends State<LacBlancApp>
               // show bottom sheet
               if (_fraction > 0.0) marginBottom = 0.0;
 
-              if (_fraction > 0.50) {
-                marginBottomSheet = 0.0;
-              }
+              if (_fraction > 1.0) marginBottomSheet = 0.0;
 
               // show text
               if (_fraction > 1.5) {
@@ -62,9 +65,7 @@ class _LacBlancAppState extends State<LacBlancApp>
               }
 
               // show custom line
-              if (_fraction >= 2.0) {
-                showCanvas = true;
-              }
+              if (_fraction >= 2.0) showCanvas = true;
             });
           });
 
