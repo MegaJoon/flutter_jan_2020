@@ -9,7 +9,7 @@ class SplashApp extends StatefulWidget {
   _SplashAppState createState() => _SplashAppState();
 }
 
-class _SplashAppState extends State<SplashApp> {
+class _SplashAppState extends State<SplashApp> with SingleTickerProviderStateMixin {
   // list<emotion>
   List<Widget> emotions = [];
 
@@ -25,6 +25,21 @@ class _SplashAppState extends State<SplashApp> {
 
   // fill white color sig
   bool isClicked = false;
+
+  // animation
+  AnimationController _animationController;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +92,7 @@ class _SplashAppState extends State<SplashApp> {
                     ),
                   ),
 
-                  SizedBox(height: padding /2),
+                  SizedBox(height: padding * 5),
 
                   // btn: SKIP
                   InkWell(
@@ -103,7 +118,7 @@ class _SplashAppState extends State<SplashApp> {
                       padding: EdgeInsets.only(top: padding),
                       width: MediaQuery.of(context).size.width,
                       child: CustomPaint(
-                        painter: CustomEmotions(currentIndex),
+                        painter: CustomEmotions(_animationController, currentIndex),
                       ),
                     ),
                   ),
@@ -166,9 +181,10 @@ class _SplashAppState extends State<SplashApp> {
 }
 
 class CustomEmotions extends CustomPainter {
+  final AnimationController _animationController;
   final int index;
 
-  CustomEmotions(this.index);
+  CustomEmotions(this._animationController, this.index);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -184,37 +200,31 @@ class CustomEmotions extends CustomPainter {
     canvas.drawCircle(Offset(size.width - 16.0, 16.0), 16.0, paint);
 
     // mouse
+    var path = Path();
+
     switch (index) {
       case 0:
-        var path = Path()
-          ..moveTo(size.width / 2 - 80.0, 150.0)
-          ..lineTo(size.width / 2 + 80.0, 120.0)
-          ..close();
-
-        var paint = Paint()
-          ..strokeWidth = 32.0
-          ..color = Colors.black
-          ..style = PaintingStyle.stroke;
-
-        canvas.drawPath(path, paint);
+        path.moveTo(size.width / 2 - 80.0, 150.0);
+        path.lineTo(size.width / 2 + 80.0, 120.0);
+        path.close();
         break;
 
       case 1:
-        var path = Path()
-          ..moveTo(size.width /2 - 80.0, 180.0)
-          ..quadraticBezierTo(size.width /2, 150.0, size.width /2 + 80.0, 180.0)
-          ..close();
-
-        var paint1 = Paint()
-          ..strokeWidth = 32.0
-          ..color = Colors.black
-          ..style = PaintingStyle.stroke;
-
-        // mouse
-        canvas.drawPath(path, paint1);
+        path.moveTo(size.width /2 - 80.0, 180.0);
+        path.quadraticBezierTo(
+            size.width /2,
+            150.0,
+            size.width /2 + 80.0,
+            180.0,
+        );
+        path.close();
         break;
-
     }
+
+    canvas.drawPath(path, Paint()
+      ..strokeWidth = 32.0
+      ..color = Colors.black
+      ..style = PaintingStyle.stroke);
   }
 
   @override
