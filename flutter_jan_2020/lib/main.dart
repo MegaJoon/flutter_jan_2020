@@ -10,6 +10,7 @@ import 'package:flutter_jan_2020/0110/second_lighting_app.dart';
 import 'package:flutter_jan_2020/0110/travel_app.dart';
 import 'package:flutter_jan_2020/0112/lac_blanc_app.dart';
 import 'package:flutter_jan_2020/0112/splash_app.dart';
+import 'package:flutter_jan_2020/0113/park_app.dart';
 
 void main() => runApp(MyApp());
 
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
 //      home: SecondLightingApp(),  // 01-10
 //      home: TravelApp(),  // 01-10
 //      home: SplashApp(),  // 01-12
-      home: LacBlancApp(),  // 01-12
+//      home: LacBlancApp(),  // 01-12
+      home: ParkApp(),  // 01-13
     );
   }
 }

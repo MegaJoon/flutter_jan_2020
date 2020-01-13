@@ -14,6 +14,7 @@ dependencies:
   dots_indicator: ^1.1.0
   scrollable_bottom_sheet: ^0.2.1
   font_awesome_flutter: ^8.5.0
+  google_fonts: ^0.3.2
 
 dev_dependencies:
   flutter_test:
@@ -44,3 +45,8 @@ flutter:
     - assets/0110/image12.jpg
     - assets/0110/image13.jpeg
     - assets/0112/image.png
+    - assets/0113/image.png
+    - assets/0113/image1.jpg
+    - assets/0113/image2.jpg
+    - assets/0113/image3.jpg
+    - assets/0113/image4.jfif
