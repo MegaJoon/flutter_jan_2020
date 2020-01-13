@@ -1,7 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // https://www.instagram.com/p/B6HdoSfIbFG/
+// https://stackoverflow.com/questions/50978603/how-to-animate-a-path-in-flutter
 
 class LacBlancApp extends StatefulWidget {
   @override
@@ -9,7 +12,7 @@ class LacBlancApp extends StatefulWidget {
 }
 
 class _LacBlancAppState extends State<LacBlancApp>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   // image
   String _image = "assets/0112/image.png";
 
@@ -18,6 +21,10 @@ class _LacBlancAppState extends State<LacBlancApp>
   // animation
   AnimationController _animationController;
   Animation<double> _animation;
+
+  // draw path animation
+  AnimationController _drawPathAnimationController;
+  Animation<double> _drawPathAnimation;
 
   double _fraction = 0.0; // _animation.value
 
@@ -37,6 +44,7 @@ class _LacBlancAppState extends State<LacBlancApp>
 
   @override
   void initState() {
+    // main animation
     _animationController =
         AnimationController(duration: Duration(seconds: 2), vsync: this)
           ..forward();
@@ -65,9 +73,34 @@ class _LacBlancAppState extends State<LacBlancApp>
               }
 
               // show custom line
-              if (_fraction >= 2.0) showCanvas = true;
+              if (_fraction >= 2.0) {
+                showCanvas = true;
+                _drawPathAnimationController.forward();
+              }
             });
           });
+
+    // draw path animation
+    _drawPathAnimationController =
+    AnimationController(duration: Duration(seconds: 1), vsync: this);
+    _drawPathAnimation =
+        Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+            curve: Curves.fastOutSlowIn,
+            parent: _drawPathAnimationController,
+          ),
+        )
+    ..addListener((){
+      setState(() {
+      });
+    })
+    ..addStatusListener((status){
+      setState(() {
+        if(status == AnimationStatus.completed){
+          print("finished");
+        }
+      });
+    });
 
     super.initState();
   }
@@ -75,6 +108,7 @@ class _LacBlancAppState extends State<LacBlancApp>
   @override
   void dispose() {
     _animationController?.dispose();
+    _drawPathAnimationController?.dispose();
     super.dispose();
   }
 
@@ -508,8 +542,8 @@ class _LacBlancAppState extends State<LacBlancApp>
             left: 0,
             right: 0,
             child: showCanvas? CustomPaint(
-              size: Size(400.0, 700.0 * _fraction / 2),
-              painter: ClimbLine(showCanvas),
+              size: Size(400.0, 700.0),
+              foregroundPainter: ClimbLine(showCanvas, _drawPathAnimation),
             ) : Container(),
           ),
         ],
@@ -520,13 +554,15 @@ class _LacBlancAppState extends State<LacBlancApp>
 
 class ClimbLine extends CustomPainter {
   final bool showCanvas;
+  final Animation<double> animation;
 
-  ClimbLine(this.showCanvas);
+  ClimbLine(this.showCanvas, this.animation);
 
   // start point
   double startHeight = 14.0;
   double startWidth = 48.0;
 
+  // point wave margin
   double margin = 6.0;
 
   // end point
@@ -539,13 +575,82 @@ class ClimbLine extends CustomPainter {
   // endPoint Color
   Color _endColor = Color.fromRGBO(219, 93, 112, 1);
 
+  // show end point
+  bool showEndPoint = false;
+
+  Path extractPathUntilLength(
+      Path originalPath,
+      double length,
+      ) {
+    var currentLength = 0.0;
+
+    var path = Path();
+
+    var metricsIterator = originalPath.computeMetrics().iterator;
+
+    while (metricsIterator.moveNext()) {
+      var metric = metricsIterator.current;
+
+      var nextLength = currentLength + metric.length;
+
+      final isLastSegment = nextLength > length;
+      if (isLastSegment) {
+        final remainingLength = length - currentLength;
+        final pathSegment = metric.extractPath(0.0, remainingLength);
+
+        path.addPath(pathSegment, Offset.zero);
+        break;
+      } else {
+        final pathSegment = metric.extractPath(0.0, metric.length);
+        path.addPath(pathSegment, Offset.zero);
+      }
+      currentLength = nextLength;
+    }
+    return path;
+  }
+
+  Path createAnimatedPath(
+      Path path,
+      double animationPercent,
+      ) {
+    final totalLength = path
+        .computeMetrics()
+        .fold(0.0, (double prev, PathMetric metric) => prev + metric.length);
+
+    final currentLength = totalLength * animationPercent;
+
+    return extractPathUntilLength(path, currentLength);
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
+    // draw path animation value
+    double animationPercent = animation.value;
+
+    if(animationPercent >= 1.0) showEndPoint = true;
+
     // start point dx dy
     Offset startOffset = Offset(size.width * 0.30, size.height * 0.85);
 
     // end point dx dy
     Offset endOffset = Offset(size.width * 0.62, size.height * 0.25);
+
+    // path line points list
+    List<Offset> points = [
+      Offset(startOffset.dx, startOffset.dy),
+      Offset(size.width * 0.55, size.height * 0.70),
+
+      Offset(size.width * 0.45, size.height * 0.60),
+      Offset(size.width * 0.40, size.height * 0.50),
+
+      Offset(size.width * 0.50, size.height * 0.48),
+      Offset(size.width * 0.90, size.height * 0.45),
+
+      Offset(size.width * 0.75, size.height * 0.35),
+      Offset(size.width * 0.60, size.height * 0.30),
+
+      Offset(endOffset.dx, endOffset.dy),
+    ];
 
     // start point
     showCanvas? canvas.drawOval(
@@ -572,17 +677,15 @@ class ClimbLine extends CustomPainter {
           ..strokeWidth = 0.50
           ..strokeCap = StrokeCap.round) : Container();
 
-    // line
-    var path = Path()
-      ..moveTo(endOffset.dx, endOffset.dy)
-      ..quadraticBezierTo(size.width * 0.60, size.height * 0.30,
-          size.width * 0.75, size.height * 0.35)
-      ..quadraticBezierTo(size.width * 0.90, size.height * 0.45,
-          size.width * 0.50, size.height * 0.48)
-      ..quadraticBezierTo(size.width * 0.40, size.height * 0.50,
-          size.width * 0.45, size.height * 0.60)
-      ..quadraticBezierTo(size.width * 0.55, size.height * 0.70,
-          startOffset.dx, startOffset.dy);
+    // path line
+    final path = createAnimatedPath(
+        Path()
+          ..moveTo(points[0].dx, points[0].dy)
+          ..quadraticBezierTo(points[1].dx, points[1].dy, points[2].dx, points[2].dy)
+          ..quadraticBezierTo(points[3].dx, points[3].dy, points[4].dx, points[4].dy)
+          ..quadraticBezierTo(points[5].dx, points[5].dy, points[6].dx, points[6].dy)
+          ..quadraticBezierTo(points[7].dx, points[7].dy, points[8].dx, points[8].dy),
+        animationPercent);
 
     var paint = Paint()
       ..style = PaintingStyle.stroke
@@ -608,7 +711,7 @@ class ClimbLine extends CustomPainter {
     showCanvas? canvas.drawPath(path, paint) : Container();
 
     // end point
-    showCanvas? canvas.drawOval(
+    showEndPoint? canvas.drawOval(
         Rect.fromCenter(
           height: endHeight,
           width: endWidth,
@@ -620,7 +723,7 @@ class ClimbLine extends CustomPainter {
           ..strokeCap = StrokeCap.round) : Container();
 
     // end point wave
-    showCanvas? canvas.drawOval(
+    showEndPoint? canvas.drawOval(
         Rect.fromCenter(
           height: endHeight + margin,
           width: endWidth + margin,
@@ -634,5 +737,5 @@ class ClimbLine extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
+  bool shouldRepaint(ClimbLine oldDelegate) => true;
 }
