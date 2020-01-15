@@ -12,6 +12,7 @@ import 'package:flutter_jan_2020/0112/lac_blanc_app.dart';
 import 'package:flutter_jan_2020/0112/splash_app.dart';
 import 'package:flutter_jan_2020/0113/park_app.dart';
 import 'package:flutter_jan_2020/0114/park_app_remind.dart';
+import 'package:flutter_jan_2020/0115/custom_bottom_bar.dart';
 
 void main() => runApp(MyApp());
 
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
 //      home: SplashApp(),  // 01-12
 //      home: LacBlancApp(),  // 01-12
 //      home: ParkApp(),  // 01-13
-      home: ParkAppRemind(),  // 01-14
+//      home: ParkAppRemind(),  // 01-14
+      home: CustomBottomBar(),  // 01-15
     );
   }
 }
