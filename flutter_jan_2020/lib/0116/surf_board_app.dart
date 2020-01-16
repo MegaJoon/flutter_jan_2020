@@ -11,17 +11,21 @@ class SurfBoardApp extends StatefulWidget {
 }
 
 class _SurfBoardAppState extends State<SurfBoardApp> {
-  // color
-  Color _color = Color.fromRGBO(117, 63, 238, 1);
-  Color _color1 = Color.fromRGBO(106, 62, 203, 1);
+  // background color
+  Color _currentPageColor = Color.fromRGBO(117, 63, 238, 1);
+  Color _nextPageColor = Color.fromRGBO(106, 62, 203, 1);
+
+  // color: text: Purchase
   Color _appbarColor = Color.fromRGBO(151, 222, 254, 1);
 
-  Color _accentColor = Color.fromRGBO(255, 219, 124, 1);
+  // color: like amberAccent
+  Color _color = Color.fromRGBO(255, 219, 124, 1);
 
   // string
   String title = "Taylor Swift";
   String subTitle = "Wen, 21 Aug\n";
   String subTitle1 = "Club Devil, 5th Avenue, 287";
+  String description = "With an appetite for the gliding, glassy indie-pop of artists like Aurora and Lana Del Rey and the Distorted Menace of Tyler the Creator and Earl Sweatshirt, Billie Eilish listens to music the way that...";
 
   // double
   double padding = 16.0;
@@ -41,258 +45,303 @@ class _SurfBoardAppState extends State<SurfBoardApp> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: _currentPageColor,
       body: Stack(
         children: <Widget>[
           // first page
           Positioned.fill(
-              child: Container(
-                color: _color,
-                child: SafeArea(
-                  top: true,
-                  left: true,
-                  right: true,
-                  child: Column(
-                    children: <Widget>[
-                      // appbar
-                      Container(
-                        height: 40.0,
-                        child: Row(
-                          children: <Widget>[
-                            // icon
-                            IconButton(
-                              onPressed: (){},
-                              icon: Icon(
-                                Icons.arrow_back_ios,
-                                size: 24.0,
-                                color: Colors.white,
-                              ),
+              child: SafeArea(
+                top: true,
+                left: true,
+                right: true,
+                child: Column(
+                  children: <Widget>[
+                    // appbar
+                    Container(
+                      height: 40.0,
+                      child: Row(
+                        children: <Widget>[
+                          // icon
+                          IconButton(
+                            onPressed: (){},
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              size: 24.0,
+                              color: Colors.white,
                             ),
+                          ),
 
-                            // spacer
-                            Spacer(),
+                          // spacer
+                          Spacer(),
 
-                            // container
-                            Container(
-                              margin: EdgeInsets.only(right: padding),
-                              height: 32.0,
-                              width: 100.0,
-                              decoration: ShapeDecoration(
-                                shape: StadiumBorder(),
-                                color: _appbarColor,
-                                shadows: [BoxShadow(
-                                  color: Colors.black12,
-                                  spreadRadius: 1.0,
-                                  blurRadius: 1.0,
-                                  offset: Offset(1.0, 1.0),
-                                )],
-                              ),
-                              child: Center(
-                                child: Text("Purchase",
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 14.0,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                          // container
+                          Container(
+                            margin: EdgeInsets.only(right: padding),
+                            height: 32.0,
+                            width: 100.0,
+                            decoration: ShapeDecoration(
+                              shape: StadiumBorder(),
+                              color: _appbarColor,
+                              shadows: [BoxShadow(
+                                color: Colors.black12,
+                                spreadRadius: 1.0,
+                                blurRadius: 1.0,
+                                offset: Offset(1.0, 1.0),
+                              )],
+                            ),
+                            child: Center(
+                              child: Text("Purchase",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14.0,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
+                    ),
 
-                      // text: title
-                      Text(title,
-                        style: GoogleFonts.poppins(
-                          fontSize: 40.0,
-                          color: _accentColor,
-                          fontWeight: FontWeight.bold,
-                          height: 2.0,
-                          shadows: [BoxShadow(
-                            color: Colors.black12,
-                            spreadRadius: 6.0,
-                            blurRadius: 6.0,
-                            offset: Offset(6.0, 6.0),
-                          )],
-                        ),
+                    // text: title
+                    Text(title,
+                      style: GoogleFonts.poppins(
+                        fontSize: 40.0,
+                        color: _color,
+                        fontWeight: FontWeight.bold,
+                        height: 2.0,
+                        shadows: [BoxShadow(
+                          color: Colors.black12,
+                          spreadRadius: 6.0,
+                          blurRadius: 6.0,
+                          offset: Offset(6.0, 6.0),
+                        )],
                       ),
+                    ),
 
-                      // text: subTitle
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          children: [
-                            // text: subTitle
-                            TextSpan(text: subTitle,
-                              style: GoogleFonts.poppins(
-                                fontSize: 14.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                height: 2.0,
-                                shadows: [BoxShadow(
-                                  color: Colors.black12,
-                                  spreadRadius: 6.0,
-                                  blurRadius: 6.0,
-                                  offset: Offset(6.0, 6.0),
-                                )],
-                              ),
+                    // text: subTitle
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        children: [
+                          // text: subTitle
+                          TextSpan(text: subTitle,
+                            style: GoogleFonts.poppins(
+                              fontSize: 14.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              height: 2.0,
+                              shadows: [BoxShadow(
+                                color: Colors.black12,
+                                spreadRadius: 6.0,
+                                blurRadius: 6.0,
+                                offset: Offset(6.0, 6.0),
+                              )],
                             ),
+                          ),
 
-                            // text: subTitle1
-                            TextSpan(text: subTitle1,
-                              style: GoogleFonts.poppins(
-                                fontSize: 12.0,
-                                color: Colors.grey[500],
-                                fontWeight: FontWeight.w600,
-                                height: 1.5,
-                                shadows: [BoxShadow(
-                                  color: Colors.black12,
-                                  spreadRadius: 6.0,
-                                  blurRadius: 6.0,
-                                  offset: Offset(6.0, 6.0),
-                                )],
-                              ),
+                          // text: subTitle1
+                          TextSpan(text: subTitle1,
+                            style: GoogleFonts.poppins(
+                              fontSize: 12.0,
+                              color: Colors.grey[500],
+                              fontWeight: FontWeight.w600,
+                              height: 1.5,
+                              shadows: [BoxShadow(
+                                color: Colors.black12,
+                                spreadRadius: 6.0,
+                                blurRadius: 6.0,
+                                offset: Offset(6.0, 6.0),
+                              )],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
+                    ),
 
-                      // selectable container
-                      Container(
-                        margin: EdgeInsets.only(top: padding * 2, left: padding, right: padding),
-                        height: 150.0,
-                        child: Row(
-                          children: <Widget>[
-                            // left container
-                            Flexible(
-                              flex: currentIndex == 1? 2 : 1,
-                              child: InkWell(
-                                onTap: (){
-                                  setState(() {
-                                    currentIndex = 1;
-                                  });
-                                },
-                                child: AnimatedContainer(
-                                  duration: Duration(seconds: 1),
-                                  curve: Curves.fastLinearToSlowEaseIn,
-                                  padding: EdgeInsets.all(padding),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(radius),
-                                    color: currentIndex == 1? _accentColor : Colors.black12,
-                                  ),
-                                  child: Center(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        // icon
-                                        Container(
-                                          margin: EdgeInsets.only(bottom: padding * 0.50),
-                                          height: 40.0,
-                                          width: 40.0,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: currentIndex == 1? Colors.orange : Colors.black12,
-                                            border: Border.all(
-                                              color: _accentColor,
-                                              width: 1.5,
-                                            ),
-                                          ),
-                                          child: Center(
-                                            child: Icon(
-                                              Icons.check,
-                                              size: 24.0,
-                                              color: currentIndex == 1? Colors.black : _accentColor,
-                                            ),
-                                          ),
-                                        ),
-
-                                        // text: 123k
-                                        Text("123K",
-                                          style: TextStyle(
-                                            fontSize: 16.0,
-                                            color: currentIndex == 1? Colors.black : Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-
-                                        // text: Going
-                                        Text("Going",
-                                          style: TextStyle(
-                                            fontSize: 16.0,
-                                            color: Colors.grey[500],
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                    // selectable container
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: padding * 2, horizontal: padding),
+                      height: 150.0,
+                      child: Row(
+                        children: <Widget>[
+                          // left container
+                          Flexible(
+                            flex: currentIndex == 1? 2 : 1,
+                            child: InkWell(
+                              onTap: (){
+                                setState(() {
+                                  currentIndex = 1;
+                                });
+                              },
+                              child: AnimatedContainer(
+                                duration: Duration(seconds: 1),
+                                curve: Curves.fastLinearToSlowEaseIn,
+                                padding: EdgeInsets.all(padding),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(radius),
+                                  color: currentIndex == 1? _color : Colors.black12,
                                 ),
-                              ),
-                            ),
-
-                            // spacer
-                            SizedBox(width: padding),
-
-                            // right container
-                            Flexible(
-                              flex: currentIndex == 2? 2 : 1,
-                              child: InkWell(
-                                onTap: (){
-                                  setState(() {
-                                    currentIndex = 2;
-                                  });
-                                },
-                                child: AnimatedContainer(
-                                  duration: Duration(seconds: 1),
-                                  curve: Curves.fastLinearToSlowEaseIn,
-                                  padding: EdgeInsets.all(padding),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(radius),
-                                    color: currentIndex == 2? _accentColor : Colors.black12,
-                                  ),
-                                  child: Center(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        // icon
-                                        SizedBox(
-                                          height: 40.0,
+                                child: Center(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      // icon
+                                      Container(
+                                        margin: EdgeInsets.only(bottom: padding * 0.50),
+                                        height: 40.0,
+                                        width: 40.0,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: currentIndex == 1? Colors.orange : Colors.black12,
+                                          border: Border.all(
+                                            color: currentIndex == 1? Colors.orange : _color,
+                                            width: 1.5,
+                                          ),
+                                        ),
+                                        child: Center(
                                           child: Icon(
-                                            currentIndex == 2? Icons.favorite : Icons.favorite_border,
+                                            Icons.check,
                                             size: 24.0,
-                                            color: Colors.pinkAccent,
+                                            color: currentIndex == 1? Colors.black : _color,
                                           ),
                                         ),
+                                      ),
 
-                                        // text: 152K
-                                        Text("152K",
-                                          style: TextStyle(
-                                            fontSize: 16.0,
-                                            color: currentIndex == 2? Colors.black : Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                      // text: 123k
+                                      Text("123K",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 16.0,
+                                          color: currentIndex == 1? Colors.black : Colors.white,
+                                          fontWeight: FontWeight.bold,
                                         ),
+                                      ),
 
-                                        // text: Interested
-                                        Text("Interested",
-                                          style: TextStyle(
-                                            fontSize: 16.0,
-                                            color: Colors.grey[500],
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                                      // text: Going
+                                      Text("Going",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 14.0,
+                                          color: Colors.grey[500],
+                                          fontWeight: FontWeight.w400,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
+                              ),
+                            ),
+                          ),
+
+                          // spacer
+                          SizedBox(width: padding),
+
+                          // right container
+                          Flexible(
+                            flex: currentIndex == 2? 2 : 1,
+                            child: InkWell(
+                              onTap: (){
+                                setState(() {
+                                  currentIndex = 2;
+                                });
+                              },
+                              child: AnimatedContainer(
+                                duration: Duration(seconds: 1),
+                                curve: Curves.fastLinearToSlowEaseIn,
+                                padding: EdgeInsets.all(padding),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(radius),
+                                  color: currentIndex == 2? _color : Colors.black12,
+                                ),
+                                child: Center(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      // icon
+                                      SizedBox(
+                                        height: 40.0,
+                                        child: Icon(
+                                          currentIndex == 2? Icons.favorite : Icons.favorite_border,
+                                          size: 32.0,
+                                          color: Colors.pinkAccent,
+                                        ),
+                                      ),
+
+                                      // text: 152K
+                                      Text("152K",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 16.0,
+                                          color: currentIndex == 2? Colors.black : Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+
+                                      // text: Interested
+                                      Text("Interested",
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 14.0,
+                                          color: Colors.grey[500],
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // text: about, description
+                    Flexible(
+                      fit: FlexFit.tight,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: padding),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            // text: about
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text("About",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 16.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  height: 2.0,
+                                ),
+                              ),
+                            ),
+
+                            // text: about, description
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(description,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w300,
+                                  height: 1.5,
+                                ),
+                              ),
+                            ),
+
+                            // dont use
+                            Flexible(
+                              fit: FlexFit.tight,
+                              child: Container(
+                                margin: EdgeInsets.only(top: padding),
+                                child: Placeholder(),
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
           ),
@@ -331,7 +380,7 @@ class _SurfBoardAppState extends State<SurfBoardApp> {
                   padding: EdgeInsets.only(left: iconPadding),
                   alignment: Alignment.centerLeft,
                   width: tabHeight + screenWidth * 2,
-                  color: _color1,
+                  color: _nextPageColor,
                   child: Icon(
                     Icons.view_column,
                     size: 32.0,
