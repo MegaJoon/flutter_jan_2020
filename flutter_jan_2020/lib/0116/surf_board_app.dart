@@ -16,6 +16,8 @@ class _SurfBoardAppState extends State<SurfBoardApp> {
   Color _color1 = Color.fromRGBO(106, 62, 203, 1);
   Color _appbarColor = Color.fromRGBO(151, 222, 254, 1);
 
+  Color _accentColor = Color.fromRGBO(255, 219, 124, 1);
+
   // string
   String title = "Taylor Swift";
   String subTitle = "Wen, 21 Aug\n";
@@ -23,6 +25,10 @@ class _SurfBoardAppState extends State<SurfBoardApp> {
 
   // double
   double padding = 16.0;
+  double radius = 16.0;
+  
+  int currentIndex = 0;
+
   double iconPadding = 32.0;
 
   double tabHeight = 64.0;
@@ -98,7 +104,7 @@ class _SurfBoardAppState extends State<SurfBoardApp> {
                       Text(title,
                         style: GoogleFonts.poppins(
                           fontSize: 40.0,
-                          color: Colors.amberAccent,
+                          color: _accentColor,
                           fontWeight: FontWeight.bold,
                           height: 2.0,
                           shadows: [BoxShadow(
@@ -144,6 +150,142 @@ class _SurfBoardAppState extends State<SurfBoardApp> {
                                   blurRadius: 6.0,
                                   offset: Offset(6.0, 6.0),
                                 )],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // selectable container
+                      Container(
+                        margin: EdgeInsets.only(top: padding * 2, left: padding, right: padding),
+                        height: 150.0,
+                        child: Row(
+                          children: <Widget>[
+                            // left container
+                            Flexible(
+                              flex: currentIndex == 1? 2 : 1,
+                              child: InkWell(
+                                onTap: (){
+                                  setState(() {
+                                    currentIndex = 1;
+                                  });
+                                },
+                                child: AnimatedContainer(
+                                  duration: Duration(seconds: 1),
+                                  curve: Curves.fastLinearToSlowEaseIn,
+                                  padding: EdgeInsets.all(padding),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(radius),
+                                    color: currentIndex == 1? _accentColor : Colors.black12,
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        // icon
+                                        Container(
+                                          margin: EdgeInsets.only(bottom: padding * 0.50),
+                                          height: 40.0,
+                                          width: 40.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: currentIndex == 1? Colors.orange : Colors.black12,
+                                            border: Border.all(
+                                              color: _accentColor,
+                                              width: 1.5,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.check,
+                                              size: 24.0,
+                                              color: currentIndex == 1? Colors.black : _accentColor,
+                                            ),
+                                          ),
+                                        ),
+
+                                        // text: 123k
+                                        Text("123K",
+                                          style: TextStyle(
+                                            fontSize: 16.0,
+                                            color: currentIndex == 1? Colors.black : Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+
+                                        // text: Going
+                                        Text("Going",
+                                          style: TextStyle(
+                                            fontSize: 16.0,
+                                            color: Colors.grey[500],
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            // spacer
+                            SizedBox(width: padding),
+
+                            // right container
+                            Flexible(
+                              flex: currentIndex == 2? 2 : 1,
+                              child: InkWell(
+                                onTap: (){
+                                  setState(() {
+                                    currentIndex = 2;
+                                  });
+                                },
+                                child: AnimatedContainer(
+                                  duration: Duration(seconds: 1),
+                                  curve: Curves.fastLinearToSlowEaseIn,
+                                  padding: EdgeInsets.all(padding),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(radius),
+                                    color: currentIndex == 2? _accentColor : Colors.black12,
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        // icon
+                                        SizedBox(
+                                          height: 40.0,
+                                          child: Icon(
+                                            currentIndex == 2? Icons.favorite : Icons.favorite_border,
+                                            size: 24.0,
+                                            color: Colors.pinkAccent,
+                                          ),
+                                        ),
+
+                                        // text: 152K
+                                        Text("152K",
+                                          style: TextStyle(
+                                            fontSize: 16.0,
+                                            color: currentIndex == 2? Colors.black : Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+
+                                        // text: Interested
+                                        Text("Interested",
+                                          style: TextStyle(
+                                            fontSize: 16.0,
+                                            color: Colors.grey[500],
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
