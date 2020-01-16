@@ -13,7 +13,7 @@ class SurfBoardApp extends StatefulWidget {
 class _SurfBoardAppState extends State<SurfBoardApp> {
   // background color
   Color _currentPageColor = Color.fromRGBO(117, 63, 238, 1);
-  Color _nextPageColor = Color.fromRGBO(106, 62, 203, 1);
+  Color _nextPageColor = Colors.deepPurple;
 
   // color: text: Purchase
   Color _appbarColor = Color.fromRGBO(151, 222, 254, 1);
@@ -30,14 +30,21 @@ class _SurfBoardAppState extends State<SurfBoardApp> {
   // double
   double padding = 16.0;
   double radius = 16.0;
-  
+
+  // selectable container index
   int currentIndex = 0;
 
+  // swipe tab icon padding
   double iconPadding = 32.0;
 
+  // swipe tab height
   double tabHeight = 64.0;
 
+  // swipe container margin right
   double marginRight = 0.0;
+
+  // isNextPage
+  bool isNextPage = false;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +61,13 @@ class _SurfBoardAppState extends State<SurfBoardApp> {
                 top: true,
                 left: true,
                 right: true,
-                child: Column(
+                child: isNextPage?
+                // second page
+                Container(
+                  child: Placeholder(),
+                ) :
+                // first page
+                Column(
                   children: <Widget>[
                     // appbar
                     Container(
@@ -371,7 +384,16 @@ class _SurfBoardAppState extends State<SurfBoardApp> {
               onHorizontalDragEnd: (DragEndDetails dragDetails){
                 setState(() {
                   if(marginRight > -200.0) marginRight = 0.0;
-                  if(marginRight <= -200.0) marginRight = -800.0;
+                  if(marginRight <= -200.0) {
+                    marginRight = -820.0;
+
+                    // dealy 1s -> show next page
+                    Future.delayed(Duration(seconds: 1), (){
+                      setState(() {
+                        isNextPage = true;
+                      });
+                    });
+                  }
                 });
               },
               child: ClipPath(
@@ -379,7 +401,7 @@ class _SurfBoardAppState extends State<SurfBoardApp> {
                 child: Container(
                   padding: EdgeInsets.only(left: iconPadding),
                   alignment: Alignment.centerLeft,
-                  width: tabHeight + screenWidth * 2,
+                  width: isNextPage? 1.0 : tabHeight + screenWidth * 2,
                   color: _nextPageColor,
                   child: Icon(
                     Icons.view_column,
