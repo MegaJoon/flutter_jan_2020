@@ -46,6 +46,14 @@ class _SurfBoardAppState extends State<SurfBoardApp> {
   // isNextPage
   bool isNextPage = false;
 
+  // image list
+  List<String> images = [
+    "https://cdn.pixabay.com/photo/2020/01/10/19/21/mont-saint-michel-4756046__340.jpg",
+    "https://cdn.pixabay.com/photo/2019/08/09/23/13/forest-4395993__340.jpg",
+    "https://cdn.pixabay.com/photo/2020/01/12/22/26/orange-4761236__340.jpg",
+    "https://cdn.pixabay.com/photo/2020/01/11/07/39/north-4756774__340.jpg",
+  ];
+
   @override
   Widget build(BuildContext context) {
     // screen width
@@ -64,7 +72,97 @@ class _SurfBoardAppState extends State<SurfBoardApp> {
                 child: isNextPage?
                 // second page
                 Container(
-                  child: Placeholder(),
+                  child: Column(
+                    children: <Widget>[
+                      // appbar
+                      Container(
+                        height: 40.0,
+                        child: Row(
+                          children: <Widget>[
+                            // icon
+                            IconButton(
+                              onPressed: (){
+                                setState(() {
+                                  // move back page
+                                  isNextPage = false;
+                                  marginRight = 0.0;
+                                });
+                              },
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                                size: 24.0,
+                                color: Colors.white,
+                              ),
+                            ),
+
+                            // spacer
+                            Spacer(),
+
+                            // text
+                            Text(title,
+                              style: GoogleFonts.poppins(
+                                fontSize: 16.0,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                shadows: [BoxShadow(
+                                  color: Colors.black12,
+                                  spreadRadius: 6.0,
+                                  blurRadius: 6.0,
+                                  offset: Offset(6.0, 6.0),
+                                )],
+                              ),
+                            ),
+
+                            // spacer
+                            Spacer(),
+                            SizedBox(
+                              width: 40.0,
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // grid view
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Container(
+                          margin: EdgeInsets.only(top: padding, left: padding, right: padding),
+                          child: GridView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.80,
+                              crossAxisSpacing: padding,
+                              mainAxisSpacing: padding,
+                            ),
+                            itemBuilder: (context, index){
+                              return Transform.translate(
+                                offset: Offset(0.0, index.isEven? 0.0 : -padding *2),
+                                child: Container(
+                                  margin: EdgeInsets.only(top: index == 1? padding *2 : 0.0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(radius),
+                                    image: DecorationImage(
+                                      image: NetworkImage(images[index %4]),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    boxShadow: [BoxShadow(
+                                      color: Colors.black12,
+                                      spreadRadius: 1.0,
+                                      blurRadius: 1.0,
+                                      offset: Offset(1.0, 1.0),
+                                    )],
+                                  ),
+//                                  child: Placeholder(),
+                                ),
+                              );
+                              },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ) :
                 // first page
                 Column(
@@ -342,7 +440,7 @@ class _SurfBoardAppState extends State<SurfBoardApp> {
                               ),
                             ),
 
-                            // dont use
+                            // Dont use
                             Flexible(
                               fit: FlexFit.tight,
                               child: Container(
@@ -387,8 +485,8 @@ class _SurfBoardAppState extends State<SurfBoardApp> {
                   if(marginRight <= -200.0) {
                     marginRight = -820.0;
 
-                    // dealy 1s -> show next page
-                    Future.delayed(Duration(seconds: 1), (){
+                    // delay 1s -> show next page
+                    Future.delayed(Duration(milliseconds: 500), (){
                       setState(() {
                         isNextPage = true;
                       });
