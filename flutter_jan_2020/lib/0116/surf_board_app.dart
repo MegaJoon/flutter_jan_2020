@@ -514,6 +514,7 @@ class _SurfBoardAppState extends State<SurfBoardApp> {
   }
 }
 
+// swipe icon container clipper
 class TabClipper extends CustomClipper<Path> {
   final double padding;
 
