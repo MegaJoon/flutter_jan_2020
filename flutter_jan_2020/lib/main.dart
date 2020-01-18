@@ -14,6 +14,7 @@ import 'package:flutter_jan_2020/0113/park_app.dart';
 import 'package:flutter_jan_2020/0114/park_app_remind.dart';
 import 'package:flutter_jan_2020/0115/custom_bottom_bar.dart';
 import 'package:flutter_jan_2020/0116/surf_board_app.dart';
+import 'package:flutter_jan_2020/0118/furniture_app.dart';
 
 void main() => runApp(MyApp());
 
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
 //      home: ParkApp(),  // 01-13
 //      home: ParkAppRemind(),  // 01-14
 //      home: CustomBottomBar(),  // 01-15
-      home: SurfBoardApp(),  // 01-16
+//      home: SurfBoardApp(),  // 01-16
+      home: FurnitureApp(),  // 01-18
     );
   }
 }
