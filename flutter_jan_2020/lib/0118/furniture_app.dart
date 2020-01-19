@@ -30,9 +30,6 @@ class _FurnitureAppState extends State<FurnitureApp> with SingleTickerProviderSt
           // main
           Positioned.fill(
             child: SafeArea(
-              top: true,
-              left: true,
-              right: true,
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
