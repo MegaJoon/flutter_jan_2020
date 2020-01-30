@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_jan_2020/0130/items_list.dart';
-import 'package:flutter_jan_2020/0130/logger_list.dart';
-import 'package:flutter_jan_2020/0130/menu_items.dart';
+import 'package:flutter_jan_2020/0130/file_explorer_app/items_list.dart';
+import 'package:flutter_jan_2020/0130/file_explorer_app/logger_list.dart';
+import 'package:flutter_jan_2020/0130/file_explorer_app/menu_items.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // https://dribbble.com/shots/9803666-File-Explorer-App-Interaction

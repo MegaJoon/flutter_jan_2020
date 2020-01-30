@@ -16,7 +16,7 @@ import 'package:flutter_jan_2020/0115/custom_bottom_bar.dart';
 import 'package:flutter_jan_2020/0116/surf_board_app.dart';
 import 'package:flutter_jan_2020/0118/furniture_app.dart';
 import 'package:flutter_jan_2020/0130/custom_bottom/custom_bottom.dart';
-import 'package:flutter_jan_2020/0130/file_explorer_app.dart';
+import 'package:flutter_jan_2020/0130/file_explorer_app/file_explorer_app.dart';
 
 void main() => runApp(MyApp());
 
